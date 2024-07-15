@@ -1,5 +1,9 @@
 # config/deploy.rb
 
+set :default_env, { path: "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH" }
+SSHKit.config.command_map[:bundle] = "bundle exec"
+
+
 set :application, 'bluelry_api'
 set :repo_url, 'git@github.com:ayoub-sourrakh/bluelry_api.git'
 set :deploy_to, "/home/ubuntu/apps/#{fetch(:application)}"
@@ -9,6 +13,9 @@ set :rbenv_ruby, '3.1.2'
 set :keep_releases, 5
 set :branch, 'main'
 
+require 'capistrano/setup'
+require 'capistrano/deploy'
+require 'capistrano/rbenv'
 require 'capistrano/bundler'
 require 'capistrano/rails'
 require 'capistrano/rails/assets'
@@ -17,7 +24,6 @@ require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
-set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 set :puma_threads, [4, 16]
 set :puma_workers, 0
 set :pty, true
