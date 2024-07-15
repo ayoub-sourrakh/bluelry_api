@@ -48,6 +48,9 @@ end
 
 gem 'capistrano', '~> 3.14'
 gem 'capistrano-rails', '~> 1.6.3'
+gem 'capistrano-bundler', require: false
+gem 'capistrano-rbenv', require: false
+gem 'capistrano3-puma', require: false
 
 gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'
