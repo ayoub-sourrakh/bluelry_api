@@ -1,7 +1,9 @@
+# config/deploy.rb
+
 set :application, 'bluelry_api'
 set :repo_url, 'git@github.com:ayoub-sourrakh/bluelry_api.git'
 set :deploy_to, "/home/ubuntu/apps/#{fetch(:application)}"
-append :linked_files, 'config/database.yml', 'config/secrets.yml', 'config/master.key'
+append :linked_files, 'config/database.yml', 'config/master.key', 'config/secrets.yml'
 append :linked_dirs, 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', 'public/system'
 set :rbenv_ruby, '3.1.2'
 set :keep_releases, 5
@@ -46,8 +48,3 @@ namespace :deploy do
   desc 'Restart application'
   task :restart do
     invoke 'puma:restart'
-  end
-
-  after :finishing, 'deploy:cleanup'
-  after 'deploy:publishing', 'deploy:restart'
-end
