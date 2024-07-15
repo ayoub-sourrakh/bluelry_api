@@ -46,3 +46,5 @@ group :development do
   # gem "spring"
 end
 
+gem 'capistrano', '~> 3.14'
+gem 'capistrano-rails', '~> 1.6.3'
