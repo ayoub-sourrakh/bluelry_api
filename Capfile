@@ -10,6 +10,7 @@ require 'capistrano/bundler'
 require 'capistrano/rails/migrations'
 require 'capistrano/puma'
 install_plugin Capistrano::Puma
+install_plugin Capistrano::Puma::Systemd
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
