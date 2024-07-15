@@ -38,6 +38,9 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
+  config.log_level = :info
+
+
   # Print deprecation notices to the Rails logger.
   config.active_support.deprecation = :log
 
@@ -52,6 +55,15 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+
+  config.force_ssl = true
+  
+  config.action_dispatch.default_headers = {
+    'X-Frame-Options' => 'SAMEORIGIN',
+    'X-Content-Type-Options' => 'nosniff',
+    'X-XSS-Protection' => '1; mode=block',
+    'Content-Security-Policy' => "default-src 'self'"
+  }
 
 
   # Raises error for missing translations.

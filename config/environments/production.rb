@@ -81,6 +81,18 @@ Rails.application.configure do
     config.logger    = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.log_level = :info
+
+  config.force_ssl = true
+  
+  config.action_dispatch.default_headers = {
+    'X-Frame-Options' => 'SAMEORIGIN',
+    'X-Content-Type-Options' => 'nosniff',
+    'X-XSS-Protection' => '1; mode=block',
+    'Content-Security-Policy' => "default-src 'self'"
+  }
+
+
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
