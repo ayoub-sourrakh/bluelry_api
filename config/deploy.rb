@@ -18,3 +18,5 @@ set :rbenv_ruby, '3.1.2'
 set :keep_releases, 5
 
 append :linked_files, "config/database.yml", "config/master.key"
+
+set :branch, 'main'
