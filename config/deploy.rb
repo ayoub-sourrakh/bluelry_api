@@ -41,7 +41,9 @@ namespace :puma do
     end
   end
 
-  before :start, :make_dirs
+  before 'deploy:starting', 'puma:make_dirs'
+  before 'deploy:starting', 'puma:config'
+  after  'deploy:finished', 'puma:restart'
 end
 
 namespace :deploy do
