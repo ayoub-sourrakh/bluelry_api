@@ -46,11 +46,13 @@ group :development do
   # gem "spring"
 end
 
-gem 'capistrano', '~> 3.14'
-gem 'capistrano-rails', '~> 1.6.3'
-gem 'capistrano-bundler', require: false
-gem 'capistrano-rbenv', require: false
-gem 'capistrano3-puma', require: false
+
+gem 'capistrano', '~> 3.11'
+gem 'capistrano-bundler', '~> 1.6'
+gem 'capistrano-rails', '~> 1.6'
+gem 'capistrano-rbenv', '~> 2.2'
+gem 'capistrano3-puma', '~> 5.0'
+
 
 gem 'ed25519', '>= 1.2', '< 2.0'
 gem 'bcrypt_pbkdf', '>= 1.0', '< 2.0'

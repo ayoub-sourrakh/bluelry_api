@@ -80,7 +80,7 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
-    capistrano-bundler (2.1.0)
+    capistrano-bundler (1.6.0)
       capistrano (~> 3.1)
     capistrano-rails (1.6.3)
       capistrano (~> 3.1)
@@ -216,11 +216,11 @@ PLATFORMS
 DEPENDENCIES
   bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap
-  capistrano (~> 3.14)
-  capistrano-bundler
-  capistrano-rails (~> 1.6.3)
-  capistrano-rbenv
-  capistrano3-puma
+  capistrano (~> 3.11)
+  capistrano-bundler (~> 1.6)
+  capistrano-rails (~> 1.6)
+  capistrano-rbenv (~> 2.2)
+  capistrano3-puma (~> 5.0)
   debug
   ed25519 (>= 1.2, < 2.0)
   mysql2 (~> 0.5)
