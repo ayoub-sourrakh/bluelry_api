@@ -16,3 +16,5 @@ set :rbenv_ruby, '3.1.2'
 
 # Number of releases to keep on the server
 set :keep_releases, 5
+
+append :linked_files, "config/database.yml", "config/master.key"
