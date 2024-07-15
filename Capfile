@@ -7,7 +7,6 @@ require 'capistrano/deploy'
 # Include additional tasks
 require 'capistrano/rbenv'
 require 'capistrano/bundler'
-require 'capistrano/rails'
 require 'capistrano/rails/migrations'
 require 'capistrano/puma'
 require 'capistrano/puma/workers'
