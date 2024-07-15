@@ -9,7 +9,7 @@ set :branch, 'main'
 
 set :default_env, { path: "$HOME/.rbenv/shims:$HOME/.rbenv/bin:$PATH" }
 SSHKit.config.command_map[:bundle] = "bundle exec"
-
+set :rails_env, 'production'
 set :puma_threads, [4, 16]
 set :puma_workers, 0
 set :pty, true
