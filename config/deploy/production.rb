@@ -10,5 +10,5 @@ set :branch, 'main'
 set :ssh_options, {
   forward_agent: true,
   auth_methods: %w(publickey),
-  keys: %w(~/.ssh/your_key.pem)
+  keys: %w(/home/ayoub_sourrakh/bly_key.pem)
 }
