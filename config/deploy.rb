@@ -17,6 +17,7 @@ require 'capistrano/puma'
 require 'capistrano/puma/workers'
 require 'capistrano/puma/nginx'
 
+set :default_env, { path: "~/.rbenv/shims:~/.rbenv/bin:$PATH" }
 set :puma_threads, [4, 16]
 set :puma_workers, 0
 set :pty, true
