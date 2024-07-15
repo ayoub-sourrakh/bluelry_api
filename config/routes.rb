@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
-  get 'home/index'
-  root 'home#index'
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  namespace :api do
+    namespace :v1 do
+      resources :products
+    end
+  end
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  match '*path', to: 'application#not_found', via: :all
 end
