@@ -1,3 +1,8 @@
+puts "RAILS_ENV: #{ENV['RAILS_ENV']}"
+puts "PORT: #{ENV['PORT']}"
+puts "RAILS_MAX_THREADS: #{ENV['RAILS_MAX_THREADS']}"
+puts "WEB_CONCURRENCY: #{ENV['WEB_CONCURRENCY']}"
+
 max_threads_count = ENV.fetch("RAILS_MAX_THREADS") { 5 }
 min_threads_count = ENV.fetch("RAILS_MIN_THREADS") { max_threads_count }
 threads min_threads_count, max_threads_count
