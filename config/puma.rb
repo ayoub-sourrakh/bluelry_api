@@ -19,4 +19,6 @@ bind "unix:///home/ubuntu/apps/bluelry_api/shared/tmp/sockets/puma.sock"
 workers ENV.fetch("WEB_CONCURRENCY") { 2 }
 preload_app!
 
+stdout_redirect '/home/ubuntu/apps/bluelry_api/current/log/puma.stdout.log', '/home/ubuntu/apps/bluelry_api/current/log/puma.stderr.log', true
+
 plugin :tmp_restart
