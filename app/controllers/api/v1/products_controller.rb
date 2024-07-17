@@ -14,9 +14,9 @@ module Api
             def show
                 product = Product.find_by(id: params[:id])
                 if product
-                    render json: { status: 'SUCCESS', message: 'Loaded product', data: product }, status: :ok
+                    render json: { status: 'BABYYYY!', message: 'Loaded product', data: product }, status: :ok
                 else
-                    render json: { status: 'ERROR', message: 'Product not found', data: {} }, status: :not_found
+                    render json: { status: 'OH NOOO!', message: 'Product not found', data: {} }, status: :not_found
                 end
             end
             
