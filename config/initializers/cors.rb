@@ -1,7 +1,7 @@
 # config/initializers/cors.rb
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins 'https://www.bluelry.com/', 'https://bluelry.com/'  # The origin for your React app
+      origins 'bluelry.com', 'www.bluelry.com', 'https://bluelry.com', 'https://www.bluelry.com'
   
       resource '*',
         headers: :any,
