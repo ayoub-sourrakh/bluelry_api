@@ -1,14 +1,12 @@
 Rails.application.routes.draw do
+
+  devise_for :users, controllers: {
+    registrations: 'users/registrations'
+  }
+  
   namespace :api do
     namespace :v1 do
-      # Devise routes pour l'authentification
-      devise_for :users, skip: [:passwords], controllers: {
-        registrations: 'api/v1/users/registrations',
-        sessions: 'api/v1/users/sessions'
-      }
-
-      # Routes pour d'autres ressources de l'API
-      resources :products, only: [:index, :show, :create, :update, :destroy]
+      resources :products, only: [:create, :index, :show, :update, :destroy]
     end
   end
 end
