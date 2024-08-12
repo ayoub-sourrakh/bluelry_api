@@ -8,7 +8,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :products, only: [:create, :index, :show, :update, :destroy]
 
-      resources :users, only: [:create, :show]
+      devise_scope :user do
+        post 'register', to: 'registrations#create'
+      end
     end
   end
 end
