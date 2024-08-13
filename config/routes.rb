@@ -6,9 +6,9 @@ Rails.application.routes.draw do
         sessions: 'api/v1/users/sessions'
       }
 
-      # Autres routes API
+      get 'users/me', to: 'users#me'
       resources :products, only: [:create, :index, :show, :update, :destroy]
-      # Ajoute ici les autres ressources que tu veux gérer via l'API
+      resources :users, only: [:index, :show, :me]
     end
   end
 end

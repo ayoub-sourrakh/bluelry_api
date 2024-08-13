@@ -264,6 +264,8 @@ Devise.setup do |config|
   #
   # The "*/*" below is required to match Internet Explorer requests.
   # config.navigational_formats = ['*/*', :html, :turbo_stream]
+  config.navigational_formats = []
+
 
   # The default HTTP method used to sign out a resource. Default is :delete.
   config.sign_out_via = :delete
@@ -302,12 +304,27 @@ Devise.setup do |config|
   # apps is `200 OK` and `302 Found` respectively, but new apps are generated with
   # these new defaults that match Hotwire/Turbo behavior.
   # Note: These might become the new default in future versions of Devise.
-  config.responder.error_status = :unprocessable_entity
-  config.responder.redirect_status = :see_other
+  # config.responder.error_status = :unprocessable_entity
+  # config.responder.redirect_status = :see_other
 
 
   config.jwt do |jwt|
     jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
+    jwt.dispatch_requests = [
+      ['POST', %r{^/api/v1/users/sign_in$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/api/v1/users/sign_out$}]
+    ]
+    jwt.expiration_time = 3.minutes.to_i
+
+    jwt.request_formats = {
+      user: [:json]
+    } 
+  end
+
+  config.warden do |manager|
+    manager.default_strategies(scope: :user).unshift :jwt
   end
 
   # ==> Configuration for :registerable
