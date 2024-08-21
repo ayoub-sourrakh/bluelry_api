@@ -308,24 +308,24 @@ Devise.setup do |config|
   # config.responder.redirect_status = :see_other
 
 
-  # config.jwt do |jwt|
-  #   jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
-  #   jwt.dispatch_requests = [
-  #     ['POST', %r{^/api/v1/users/sign_in$}]
-  #   ]
-  #   jwt.revocation_requests = [
-  #     ['DELETE', %r{^/api/v1/users/sign_out$}]
-  #   ]
-  #   jwt.expiration_time = 180.minutes.to_i
+  config.jwt do |jwt|
+    jwt.secret = Rails.application.credentials.devise[:jwt_secret_key]
+    jwt.dispatch_requests = [
+      ['POST', %r{^/api/v1/users/sign_in$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/api/v1/users/sign_out$}]
+    ]
+    jwt.expiration_time = 120.minutes.to_i
 
-  #   jwt.request_formats = {
-  #     user: [:json]
-  #   } 
-  # end
+    jwt.request_formats = {
+      user: [:json]
+    } 
+  end
 
-  # config.warden do |manager|
-  #   manager.default_strategies(scope: :user).unshift :jwt
-  # end
+  config.warden do |manager|
+    manager.default_strategies(scope: :user).unshift :jwt
+  end
 
   # ==> Configuration for :registerable
 
