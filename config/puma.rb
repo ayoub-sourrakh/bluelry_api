@@ -19,6 +19,6 @@ bind "unix:///home/ubuntu/apps/bluelry_api/shared/tmp/sockets/puma.sock" if ENV.
 workers ENV.fetch("WEB_CONCURRENCY") { 2 } if ENV.fetch("RAILS_ENV") == "production"
 preload_app! if ENV.fetch("RAILS_ENV") == "production"
 
-# stdout_redirect '/home/ubuntu/apps/bluelry_api/current/log/puma.stdout.log', '/home/ubuntu/apps/bluelry_api/current/log/puma.stderr.log', true
+stdout_redirect '/home/ubuntu/apps/bluelry_api/current/log/puma.stdout.log', '/home/ubuntu/apps/bluelry_api/current/log/puma.stderr.log', true
 
 plugin :tmp_restart

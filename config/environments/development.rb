@@ -38,7 +38,7 @@ Rails.application.configure do
 
   config.action_mailer.perform_caching = false
 
-  config.log_level = :debug
+  config.log_level = :info
 
 
   # Print deprecation notices to the Rails logger.
@@ -56,7 +56,7 @@ Rails.application.configure do
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
 
-  # config.force_ssl = true
+  config.force_ssl = true
   
   config.action_dispatch.default_headers = {
     'X-Frame-Options' => 'SAMEORIGIN',
