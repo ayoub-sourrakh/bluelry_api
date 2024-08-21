@@ -323,9 +323,9 @@ Devise.setup do |config|
   #   } 
   # end
 
-  config.warden do |manager|
-    manager.default_strategies(scope: :user).unshift :jwt
-  end
+  # config.warden do |manager|
+  #   manager.default_strategies(scope: :user).unshift :jwt
+  # end
 
   # ==> Configuration for :registerable
 
