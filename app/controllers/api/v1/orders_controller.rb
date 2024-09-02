@@ -5,15 +5,15 @@ module Api
         before_action :authenticate_api_v1_user!
   
         def create
-          order = current_api_v1_user.orders.new(order_params)
-          order.total_price = calculate_total_price(order_params[:order_items_attributes])
-  
-          if order.save
-            render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
-          else
-            render json: { status: 'ERROR', message: 'Order not created', data: order.errors }, status: :unprocessable_entity
+            order = current_api_v1_user.orders.new(order_params)
+            order.total_price = calculate_total_price(order_params[:order_items_attributes])
+        
+            if order.save
+              render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
+            else
+              render json: { status: 'ERROR', message: 'Order not created', data: order.errors }, status: :unprocessable_entity
+            end
           end
-        end
   
         def index
           orders = current_api_v1_user.orders.includes(:order_items)
@@ -42,10 +42,11 @@ module Api
         end
   
         def calculate_total_price(order_items_attributes)
-          order_items_attributes.sum do |item|
-            product = Product.find(item[:product_id])
-            product.price * item[:quantity].to_i
-          end
+            return 0 unless order_items_attributes.present?
+        
+            order_items_attributes.sum do |item|
+              item[:quantity].to_i * item[:price].to_f
+            end
         end
       end
     end
