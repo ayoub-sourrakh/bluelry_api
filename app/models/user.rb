@@ -9,4 +9,6 @@ class User < ApplicationRecord
   validates :date_of_birth, presence: true
 
   has_one :cart, dependent: :destroy
+
+  has_many :orders, dependent: :destroy
 end
