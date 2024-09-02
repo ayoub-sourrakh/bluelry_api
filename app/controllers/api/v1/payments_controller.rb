@@ -4,6 +4,7 @@ module Api
             before_action :authenticate_api_v1_user!
             
             def create_payment_intent
+                # Log the incoming request parameters
                 Rails.logger.info("Starting create_payment_intent action")
                 Rails.logger.info("Received params: #{params.inspect}")
                 
@@ -21,13 +22,22 @@ module Api
                     amount: amount,
                     currency: 'eur',
                     payment_method_types: ['card'],
-                    )
-                    
-                    render json: { client_secret: payment_intent.client_secret }, status: :ok
-                rescue Stripe::StripeError => e
-                    render json: { error: e.message }, status: :unprocessable_entity
-                end
+                    metadata: {
+                    user_id: current_api_v1_user.id, # Track the user who initiated the payment
+                    email: current_api_v1_user.email # Log the user's email for additional context
+                }
+                )
+                Rails.logger.info("PaymentIntent created successfully with ID: #{payment_intent.id}")
+                
+                render json: { client_secret: payment_intent.client_secret }, status: :ok
+            rescue Stripe::StripeError => e
+                Rails.logger.error("Stripe error occurred: #{e.message}")
+                render json: { error: e.message }, status: :unprocessable_entity
+            rescue => e
+                Rails.logger.error("Unexpected error occurred: #{e.message}")
+                render json: { error: "Something went wrong" }, status: :internal_server_error
             end
         end
     end
+end
 end
