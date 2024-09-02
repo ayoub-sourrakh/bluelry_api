@@ -17,7 +17,7 @@ module Api
           end
   
           begin
-            Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key) # Utilisation de la clé secrète
+            Stripe.api_key = 'sk_test_51PuaGIATsinV8eeEtm4dHlD7j54QIRSwfNy4g4lNwo0UCiQJocJ62u5NUaVqh8VP47Hocy7Py2p5qRQCKTC576fj00EYVIlUNc'
   
             payment_intent = Stripe::PaymentIntent.create(
               amount: amount,
