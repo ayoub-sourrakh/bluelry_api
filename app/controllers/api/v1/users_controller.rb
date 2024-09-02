@@ -17,7 +17,7 @@ class Api::V1::UsersController < ApplicationController
     def me
         render json: {
         status: 'success',
-        user: current_api_v1_user,
+        user: @current_user,
         jwt_payload: @jwt_payload
         }
     end
