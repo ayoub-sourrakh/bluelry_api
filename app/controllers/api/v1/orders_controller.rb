@@ -5,21 +5,22 @@ module Api
 
       def create
         order = current_api_v1_user.orders.new(order_params)
-        
-        if order_params[:order_items_attributes].present?
-          order.total_price = calculate_total_price(order_params[:order_items_attributes])
-        else
-          render json: { status: 'ERROR', message: 'No items in order' }, status: :unprocessable_entity
+      
+        if order_params[:order_items_attributes].blank?
+          render json: { status: 'ERROR', message: 'Order items are required' }, status: :unprocessable_entity
           return
         end
-
+      
+        order.total_price = calculate_total_price(order_params[:order_items_attributes])
+      
         if order.save
           create_order_items(order, order_params[:order_items_attributes])
           render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Order not created', data: order.errors.full_messages }, status: :unprocessable_entity
+          render json: { status: 'ERROR', message: 'Order not created', errors: order.errors.full_messages }, status: :unprocessable_entity
         end
       end
+      
 
       def index
         orders = current_api_v1_user.orders.includes(:order_items)
