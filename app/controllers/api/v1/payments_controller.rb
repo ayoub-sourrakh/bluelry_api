@@ -4,21 +4,15 @@ module Api
         before_action :authenticate_api_v1_user!
   
         def create_payment_intent
-          Rails.logger.info("Starting create_payment_intent action")
-          Rails.logger.info("Received params: #{params.inspect}")
+          Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
   
           amount = params[:amount]
-          Rails.logger.info("Amount to process: #{amount}")
-  
           if amount.nil?
-            Rails.logger.error("Amount is missing from the request")
             render json: { error: "Amount is missing" }, status: :unprocessable_entity
             return
           end
   
           begin
-            Stripe.api_key = 'sk_test_51PuaGIATsinV8eeEtm4dHlD7j54QIRSwfNy4g4lNwo0UCiQJocJ62u5NUaVqh8VP47Hocy7Py2p5qRQCKTC576fj00EYVIlUNc'
-  
             payment_intent = Stripe::PaymentIntent.create(
               amount: amount,
               currency: 'eur',
@@ -28,15 +22,10 @@ module Api
                 email: current_api_v1_user.email
               }
             )
-            Rails.logger.info("PaymentIntent created successfully with ID: #{payment_intent.id}")
   
             render json: { client_secret: payment_intent.client_secret }, status: :ok
           rescue Stripe::StripeError => e
-            Rails.logger.error("Stripe error occurred: #{e.message}")
             render json: { error: e.message }, status: :unprocessable_entity
-          rescue => e
-            Rails.logger.error("Unexpected error occurred: #{e.message}")
-            render json: { error: "Something went wrong" }, status: :internal_server_error
           end
         end
       end
