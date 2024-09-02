@@ -66,3 +66,5 @@ gem 'pundit'
 
 gem 'rack-attack'
 
+gem 'stripe'
+

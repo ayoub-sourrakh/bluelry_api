@@ -21,7 +21,7 @@ module Api
           end
   
         def add_item
-            cart = @current_user.cart || @current_user.create_cart
+            cart = current_api_v1_user.cart || current_api_v1_user.create_cart
             item = cart.cart_items.find_by(product_id: params[:product_id])
     
             if item
@@ -38,7 +38,7 @@ module Api
         end
   
         def remove_item
-          cart = @current_user.cart
+          cart = current_api_v1_user.cart
           item = cart.cart_items.find_by(product_id: params[:product_id])
           if item&.destroy
             render json: { status: 'SUCCESS', message: 'Item removed from cart', data: cart.as_json(include: :cart_items) }, status: :ok
@@ -48,7 +48,7 @@ module Api
         end
   
         def clear_cart
-          cart = @current_user.cart
+          cart = current_api_v1_user.cart
           cart.cart_items.destroy_all
           render json: { status: 'SUCCESS', message: 'Cart cleared', data: cart }, status: :ok
         end
