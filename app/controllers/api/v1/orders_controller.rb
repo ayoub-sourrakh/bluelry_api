@@ -5,15 +5,19 @@ module Api
 
       def create
         order = current_api_v1_user.orders.new(order_params)
-        order.total_price = calculate_total_price(order_params[:order_items_attributes])
+        
+        if order_params[:order_items_attributes].present?
+          order.total_price = calculate_total_price(order_params[:order_items_attributes])
+        else
+          render json: { status: 'ERROR', message: 'No items in order' }, status: :unprocessable_entity
+          return
+        end
 
         if order.save
-          # Create associated order items after the order is saved
           create_order_items(order, order_params[:order_items_attributes])
-          
           render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Order not created', errors: order.errors.full_messages }, status: :unprocessable_entity
+          render json: { status: 'ERROR', message: 'Order not created', data: order.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
@@ -44,14 +48,14 @@ module Api
       end
 
       def calculate_total_price(order_items_attributes)
-        return 0 unless order_items_attributes.present?
-
         order_items_attributes.sum do |item|
           item[:quantity].to_i * item[:price].to_f
         end
       end
 
       def create_order_items(order, order_items_attributes)
+        return unless order_items_attributes.present?
+
         order_items_attributes.each do |item_attrs|
           order.order_items.create(item_attrs)
         end
