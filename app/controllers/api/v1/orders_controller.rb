@@ -5,17 +5,13 @@ module Api
       before_action :authenticate_api_v1_user!
 
       def create
+        # Initialize the order with the nested attributes
         order = current_api_v1_user.orders.new(order_params)
 
-        if order_params[:order_items_attributes].blank?
-          render json: { status: 'ERROR', message: 'Order items are required' }, status: :unprocessable_entity
-          return
-        end
-
+        # Calculate the total price for the order
         order.total_price = calculate_total_price(order_params[:order_items_attributes])
 
         if order.save
-          create_order_items(order, order_params[:order_items_attributes])
           render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
         else
           render json: { status: 'ERROR', message: 'Order not created', errors: order.errors.full_messages }, status: :unprocessable_entity
@@ -49,16 +45,10 @@ module Api
       end
 
       def calculate_total_price(order_items_attributes)
+        return 0 unless order_items_attributes.present?
+
         order_items_attributes.sum do |item|
           item[:quantity].to_i * item[:price].to_f
-        end
-      end
-
-      def create_order_items(order, order_items_attributes)
-        return unless order_items_attributes.present?
-
-        order_items_attributes.each do |item_attrs|
-          order.order_items.create(item_attrs)
         end
       end
     end
