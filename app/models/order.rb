@@ -11,6 +11,7 @@ class Order < ApplicationRecord
 
   validates :status, inclusion: { in: STATUSES }
   validates :total_price, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :shipping_address, presence: true
 
   private
 

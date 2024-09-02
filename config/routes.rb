@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         delete 'remove_item', to: 'carts#remove_item'
         delete 'clear', to: 'carts#clear_cart'
       end
+      resources :orders, only: [:create, :index, :show]
     end
   end
 end
