@@ -15,7 +15,6 @@ Rails.application.routes.draw do
         delete 'clear', to: 'carts#clear_cart'
       end
       resources :orders, only: [:create, :index, :show]
-      post 'create-payment-intent', to: 'payments#create_payment_intent'
     end
   end
 end
