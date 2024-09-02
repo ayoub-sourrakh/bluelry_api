@@ -2,7 +2,7 @@
 module Api
     module V1
       class CartsController < ApplicationController
-        before_action :authenticate_user!
+        before_action :authenticate_api_v1_user!, except: [:index, :show]
   
         def show
           cart = current_user.cart || current_user.create_cart
