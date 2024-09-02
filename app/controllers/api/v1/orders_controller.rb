@@ -5,18 +5,15 @@ module Api
 
       def create
         order = current_api_v1_user.orders.new(order_params)
-
-        # Ensure that order items are provided
+        
         if order_params[:order_items_attributes].blank?
           render json: { status: 'ERROR', message: 'Order items are required' }, status: :unprocessable_entity
           return
         end
 
-        # Calculate total price before saving the order
         order.total_price = calculate_total_price(order_params[:order_items_attributes])
 
         if order.save
-          # Create the associated order items
           create_order_items(order, order_params[:order_items_attributes])
           render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
         else
@@ -58,7 +55,7 @@ module Api
 
       def create_order_items(order, order_items_attributes)
         order_items_attributes.each do |item_attrs|
-          order.order_items.create!(item_attrs)
+          order.order_items.create(item_attrs)
         end
       end
     end
