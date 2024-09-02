@@ -5,7 +5,7 @@ module Api
 
       def create
         order = current_api_v1_user.orders.new(order_params)
-        
+
         if order_params[:order_items_attributes].blank?
           render json: { status: 'ERROR', message: 'Order items are required' }, status: :unprocessable_entity
           return
@@ -54,6 +54,8 @@ module Api
       end
 
       def create_order_items(order, order_items_attributes)
+        return unless order_items_attributes.present?
+
         order_items_attributes.each do |item_attrs|
           order.order_items.create(item_attrs)
         end
