@@ -10,7 +10,7 @@ module Api
         end
   
         def add_item
-            cart = current_user.cart || current_user.create_cart
+            cart = @current_user.cart || @current_user.create_cart
             item = cart.cart_items.find_by(product_id: params[:product_id])
     
             if item
