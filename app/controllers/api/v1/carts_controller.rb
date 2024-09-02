@@ -5,9 +5,20 @@ module Api
         before_action :authenticate_api_v1_user!, except: [:index, :show]
   
         def show
-          cart = @current_user.cart || @current_user.create_cart
-          render json: { status: 'SUCCESS', message: 'Loaded cart', data: cart.as_json(include: :cart_items) }, status: :ok
-        end
+            cart = current_api_v1_user.cart || current_api_v1_user.create_cart
+    
+            render json: {
+              status: 'SUCCESS',
+              message: 'Loaded cart',
+              data: {
+                id: cart.id,
+                user_id: cart.user_id,
+                created_at: cart.created_at,
+                updated_at: cart.updated_at,
+                cart_items: cart.cart_items.as_json(include: :product)  # Include product details here
+              }
+            }, status: :ok
+          end
   
         def add_item
             cart = @current_user.cart || @current_user.create_cart
