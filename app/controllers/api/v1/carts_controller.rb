@@ -5,12 +5,12 @@ module Api
         before_action :authenticate_api_v1_user!, except: [:index, :show]
   
         def show
-          cart = current_user.cart || current_user.create_cart
+          cart = @current_user.cart || @current_user.create_cart
           render json: { status: 'SUCCESS', message: 'Loaded cart', data: cart.as_json(include: :cart_items) }, status: :ok
         end
   
         def add_item
-          cart = current_user.cart || current_user.create_cart
+          cart = @current_user.cart || @current_user.create_cart
           product = Product.find(params[:product_id])
           item = cart.cart_items.find_or_initialize_by(product: product)
           item.quantity += params[:quantity].to_i
@@ -22,7 +22,7 @@ module Api
         end
   
         def remove_item
-          cart = current_user.cart
+          cart = @current_user.cart
           item = cart.cart_items.find_by(product_id: params[:product_id])
           if item&.destroy
             render json: { status: 'SUCCESS', message: 'Item removed from cart', data: cart.as_json(include: :cart_items) }, status: :ok
@@ -32,7 +32,7 @@ module Api
         end
   
         def clear_cart
-          cart = current_user.cart
+          cart = @current_user.cart
           cart.cart_items.destroy_all
           render json: { status: 'SUCCESS', message: 'Cart cleared', data: cart }, status: :ok
         end
