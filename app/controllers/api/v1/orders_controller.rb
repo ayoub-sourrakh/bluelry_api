@@ -5,12 +5,12 @@ module Api
 
       def create
         order = current_api_v1_user.orders.new(order_params)
-
+        order.total_price = calculate_total_price(order_params[:order_items_attributes])
+      
         if order.save
-          calculate_total_price(order) # Calculate and update the total price after saving the order
           render json: { status: 'SUCCESS', message: 'Order created', data: order }, status: :ok
         else
-          render json: { status: 'ERROR', message: 'Order not created', data: order.errors }, status: :unprocessable_entity
+          render json: { status: 'ERROR', message: 'Order not created', errors: order.errors.full_messages }, status: :unprocessable_entity
         end
       end
 
