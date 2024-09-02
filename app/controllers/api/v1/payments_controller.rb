@@ -4,7 +4,7 @@ module Api
         before_action :authenticate_api_v1_user!
   
         def create_payment_intent
-          Stripe.api_key = Rails.application.credentials.dig(:stripe, :secret_key)
+          Stripe.api_key = 'pk_test_51PuaGIATsinV8eeEVA3BFa8EmiKaK2Cvz4Of1gm1Sybj9CfOa3tf6mEkFk7viEKlrLFHVKiEYfwibv63QTmCEJeu00Ttghs80Q'
   
           amount = params[:amount]
           if amount.nil?
