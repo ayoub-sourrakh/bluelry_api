@@ -2,7 +2,7 @@ module Api
     module V1
       class PaymentsController < ApplicationController
         def create_payment_intent
-          amount = params.dig(:payment, :amount) # Utilisez dig pour accéder aux paramètres imbriqués
+          amount = params[:amount] # Assurez-vous que ce paramètre est bien reçu
   
           if amount.nil?
             render json: { error: "Amount is missing" }, status: :unprocessable_entity
