@@ -1,9 +1,13 @@
-# app/controllers/api/v1/payments_controller.rb
 module Api
     module V1
       class PaymentsController < ApplicationController
         def create_payment_intent
-          amount = params[:amount] # Assurez-vous que ce paramètre est correctement passé
+          amount = params.dig(:payment, :amount) # Utilisez dig pour accéder aux paramètres imbriqués
+  
+          if amount.nil?
+            render json: { error: "Amount is missing" }, status: :unprocessable_entity
+            return
+          end
   
           begin
             payment_intent = Stripe::PaymentIntent.create(
