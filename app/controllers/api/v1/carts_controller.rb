@@ -10,15 +10,20 @@ module Api
         end
   
         def add_item
-          cart = @current_user.cart || @current_user.create_cart
-          product = Product.find(params[:product_id])
-          item = cart.cart_items.find_or_initialize_by(product: product)
-          item.quantity += params[:quantity].to_i
-          if item.save
-            render json: { status: 'SUCCESS', message: 'Item added to cart', data: cart.as_json(include: :cart_items) }, status: :ok
-          else
-            render json: { status: 'ERROR', message: 'Failed to add item to cart', data: item.errors }, status: :unprocessable_entity
-          end
+            cart = current_user.cart || current_user.create_cart
+            item = cart.cart_items.find_by(product_id: params[:product_id])
+    
+            if item
+              item.quantity += params[:quantity].to_i
+            else
+              item = cart.cart_items.build(product_id: params[:product_id], quantity: params[:quantity])
+            end
+    
+            if item.save
+              render json: { status: 'SUCCESS', message: 'Item added to cart', data: cart.as_json(include: :cart_items) }, status: :ok
+            else
+              render json: { status: 'ERROR', message: 'Failed to add item to cart', data: item.errors.full_messages }, status: :unprocessable_entity
+            end
         end
   
         def remove_item
