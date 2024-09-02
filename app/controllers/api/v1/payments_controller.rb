@@ -1,8 +1,10 @@
 module Api
     module V1
       class PaymentsController < ApplicationController
+        before_action :authenticate_api_v1_user!
+
         def create_payment_intent
-          amount = params[:amount] # Assurez-vous que ce paramètre est bien reçu
+          amount = params[:amount]
   
           if amount.nil?
             render json: { error: "Amount is missing" }, status: :unprocessable_entity
