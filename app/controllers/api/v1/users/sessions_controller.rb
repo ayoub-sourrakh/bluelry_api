@@ -28,6 +28,16 @@ module Api
           }
         end
 
+        def destroy
+          if current_api_v1_user
+            sign_out(current_api_v1_user)
+            render json: { status: 'success', message: 'Déconnexion réussie' }, status: :ok
+          else
+            render json: { status: 'error', message: 'Utilisateur non connecté' }, status: :unauthorized
+          end
+        end
+        
+
         private
 
         def respond_to_on_destroy
